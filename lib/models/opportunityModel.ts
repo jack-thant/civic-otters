@@ -13,6 +13,10 @@ export const opportunitySchema = new Schema({
         unique: true,
         required: true
     },
+    imageUrl: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
     },

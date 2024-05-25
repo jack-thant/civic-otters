@@ -53,6 +53,7 @@ function MyComponent() {
 
     const newOpportunity: typeof Opportunity = {
         name: "drinking",
+        imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
         description: "drinking desc",
         availableSlots: 100,
         venue: "drinking place",
