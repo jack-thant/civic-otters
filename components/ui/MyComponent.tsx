@@ -1,7 +1,9 @@
 "use client"
 
 import { fetchAllUsers, getUser, getUserByEmail, addNewUser } from '@/lib/actions/userActions';
+import { fetchAllOpportunities, getOpportunity, addNewOpportunity } from '@/lib/actions/opportunityActions';
 import User from '@/lib/models/userModel';
+import { Opportunity } from '@/lib/models/opportunityModel';
 
 function MyComponent() {
 
@@ -33,18 +35,28 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        email: "pear@example.com",
-        userImage: "https://example.com/pear.jpg",
+        email: "orange@example.com",
+        userImage: "https://example.com/orange.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "pear pear",
-        DOB: "1975-11-15",
+        name: "orange orange",
+        DOB: "1999-11-15",
         userType: 0,
+        xp: 100,
         friends: [],
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
         requested: [],
         pending: []
+    };
+
+    const newOpportunity: typeof Opportunity = {
+        name: "Mining",
+        description: "Mining desc",
+        availableSlots: 100,
+        venue: "dbsxxxxx",
+        date: "2010-11-15",
+        xp: 200,
     };
 
     const handleAddNewUser = async (user: typeof User) => {
@@ -56,15 +68,43 @@ function MyComponent() {
         }
     };
 
+    const handleFetchOpportunities = async () => {
+        try {
+            const usersJSON = await fetchAllOpportunities();
+            console.log(usersJSON)
+        } catch (error) {
+            console.log("An error occurred while fetching users:", error);
+        }
+    };
+
+    const handleGetOpportunity = async (id: string) => {
+        try {
+            const fetchedOpportunity = await getOpportunity(id);
+            console.log(fetchedOpportunity);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleAddNewOpportunity = async (opp: typeof Opportunity) => {
+        try {
+            const createdOpportunity = await addNewOpportunity(opp);
+            console.log(createdOpportunity);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     return (
         <div>
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
-
             <button style={{border: "1px black solid"}} onClick={() => handleGetUser('66519ca5d021f3503872d071')}>Get User by ID</button> <br />
-
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
-
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
+
+            <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
         </div>
     );
 }

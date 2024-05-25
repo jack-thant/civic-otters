@@ -1,18 +1,8 @@
 "use server"
 
 import { connectToDB } from '@/lib/mongoose';
-// import { User } from '../models/userModel';
 import User from '@/lib/models/userModel';
 
-// export async function fetchAllUsers() {
-//     try {
-//         connectToDB();
-
-//         return await User.find();
-//     } catch (error: any) {
-//         throw new Error(`Failed to fetch user: ${error.message}`);
-//     }
-// }
 export async function fetchAllUsers() {
     try {
         await connectToDB();
