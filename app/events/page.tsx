@@ -1,7 +1,3 @@
 export default function Page() {
-  return (
-   <main>
-    hello world
-    </main>
-  );
-}
+    return <p>event Page</p>;
+  }
