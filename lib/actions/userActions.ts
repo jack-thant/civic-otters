@@ -1,8 +1,8 @@
 "use server"
 
-import { connectToDB } from '../mongoose';
+import { connectToDB } from '@/lib/mongoose';
 // import { User } from '../models/userModel';
-import User from '../models/userModel';
+import User from '@/lib/models/userModel';
 
 // export async function fetchAllUsers() {
 //     try {
