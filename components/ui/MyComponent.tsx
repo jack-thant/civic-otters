@@ -65,7 +65,12 @@ function MyComponent() {
     const handleGetUserFriends = async (userId: string) => {
         try {
             const friends = await getUserFriends(userId);
-            console.log(friends);
+            if (friends == null) {
+                console.log("No friends")
+            } else {
+                console.log(friends);
+            }
+            
         } catch (err: any) {
             console.log(err.message);
         }
@@ -126,12 +131,13 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        email: "1d@example.com",
-        userImage: "https://example.com/1d.jpg",
-        password: "passwordABC",
+        _id: "6651f520191db42519621f9b",
+        email: "testing@gmail.com",
+        userImage: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
+        password: "password",
         isNewUser: true,
-        name: "1d",
-        DOB: "2010-11-15",
+        name: "testing",
+        DOB: "2011-11-15",
         userType: 400,
         xp: 0,
         friends: [],
@@ -203,17 +209,17 @@ function MyComponent() {
     return (
         <div>
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651e0ba94ee984b3c2436e4')}>Get User by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651f520191db42519621f9b')}>Get User by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651e3a081f554ce4a802128')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('grape grape')}>Get User by Name</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('testing')}>Get User by Name</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('1c', '1d')}>Add Friend</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('1d', '1c')}>Accept Friend Request</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('eventester')}>Get Events</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('1c')}>Get All Friends Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('testing')}>Get Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('testing')}>Get All Friends Events</button><br />
 
             <br />
 

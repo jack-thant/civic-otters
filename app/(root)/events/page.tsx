@@ -1,12 +1,9 @@
 // pages/events/index.tsx
-import { useState } from "react";
+
 import Link from "next/link";
 import Container from "@/components/cards/event-card";
-import Image from "@assets/cat.png";
 import {
   fetchAllOpportunities,
-  getOpportunity,
-  addNewOpportunity,
 } from "@/lib/actions/opportunity.actions";
 
 export default async function EventsPage() {
