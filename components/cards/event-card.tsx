@@ -80,7 +80,7 @@ const Container = ({
             {tags.slice(0, 3).map((tag, index) => (
               <span key={index} className="mr-2 mb-2">
                 <Badge
-                  className="font-semibold bg-dark-3 text-light-4 py-2"
+                  className="font-semibold bg-dark-3 text-light-4 px-3 py-2"
                   variant="default"
                 >
                   {tag}
