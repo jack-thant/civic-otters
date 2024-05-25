@@ -10,11 +10,13 @@ import {
     checkName,
     addFriend,
     getUserByName,
-    acceptFriendRequest
+    acceptFriendRequest,
+    getUserOpportunities,
+    getFriendEvents,
 } from '@/lib/actions/userActions';
 import { 
     fetchAllOpportunities, 
-    getOpportunity, 
+    getOpportunity,
     addNewOpportunity, 
     deleteOpportunity 
 } from '@/lib/actions/opportunityActions';
@@ -105,12 +107,30 @@ function MyComponent() {
         }
     };
 
+    const handleGetUserEvents = async (name: string) => {
+        try {
+            const events = await getUserOpportunities(name);
+            console.log(events);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleGetFriendEvents = async (name: string) => {
+        try {
+            const events = await getFriendEvents(name);
+            console.log(events);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        email: "vv@example.com",
-        userImage: "https://example.com/vv.jpg",
+        email: "1d@example.com",
+        userImage: "https://example.com/1d.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "vv",
+        name: "1d",
         DOB: "2010-11-15",
         userType: 400,
         xp: 0,
@@ -118,7 +138,8 @@ function MyComponent() {
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
         requested: [],
-        pending: []
+        pending: [],
+        events: ["6651f520191db42519621f9b"],
     };
 
     const newOpportunity: typeof Opportunity = {
@@ -189,8 +210,10 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651e3a081f554ce4a802128')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('grape grape')}>Get User by Name</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('uu', 'vv')}>Add Friend</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('uu', 'vv')}>Accept Friend Request</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('1c', '1d')}>Add Friend</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('1d', '1c')}>Accept Friend Request</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('eventester')}>Get Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('1c')}>Get All Friends Events</button><br />
 
             <br />
 

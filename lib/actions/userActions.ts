@@ -2,6 +2,7 @@
 
 import { connectToDB } from '@/lib/mongoose';
 import User from '@/lib/models/userModel';
+import Opportunity from '@/lib/models/opportunityModel';
 
 export async function fetchAllUsers() {
     try {
@@ -87,6 +88,69 @@ export async function getUserFriends(userId: string) {
     }
 }
 
+export async function getUserOpportunities(name: string) {
+    try {
+        await connectToDB();
+        
+        // Find the user by ID
+        const user = await getUserByName(name);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // Extract friend IDs from the user's friends array
+        const eventsIDs = user.events;
+
+        // Find users with friend IDs
+        const events = await Opportunity.find({ _id: { $in: eventsIDs } });
+
+        // Return friends as plain objects
+        return events.map(event => event.toObject());
+    } catch (err: any) {
+        throw new Error(`Failed to fetch user friends: ${err.message}`);
+    }
+}
+
+export async function getFriendEvents(name: string) {
+    try {
+        // Find the user
+        const user = await getUserByName(name);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // Extract friend IDs from the user's friends array
+        const friendIds = user.friends;
+
+        // Find events for each friend
+        const friendEvents = [];
+        for (const friendId of friendIds) {
+            // Find user by ID
+            const friend = await User.findById(friendId);
+            if (!friend) {
+                throw new Error('Friend not found');
+            }
+
+            // Extract event IDs from the friend's events array
+            const eventIds = friend.events;
+
+            // Find events with event IDs
+            const events = await Opportunity.find({ _id: { $in: eventIds } });
+
+            // Push events to the friendEvents array
+            friendEvents.push({
+                friendId: friend._id,
+                friendName: friend.name,
+                events: events.map(event => event.toObject())
+            });
+        }
+
+        return friendEvents;
+    } catch (err: any) {
+        throw new Error(`Failed to fetch user friends' events: ${err.message}`);
+    }
+}
+
 export async function checkName(name: string) {
     try {
         await connectToDB();
@@ -155,7 +219,89 @@ export async function addFriend(requesterName: string, receiverName: string) {
     }
 }
 
-export async function acceptFriendRequest(requesterName: string, receiverName: string) {
+// export async function acceptFriendRequest(requesterName: string, receiverName: string) {
+//     try {
+//       await connectToDB();
+  
+//       const [requesterUser, receiverUser] = await Promise.all([
+//         getUserByName(requesterName),
+//         getUserByName(receiverName),
+//       ]);
+  
+//       if (!requesterUser || !receiverUser) {
+//         throw new Error('User(s) not found');
+//       }
+  
+//       const requesterUserId = requesterUser._id;
+//       const receiverUserId = receiverUser._id;
+  
+//       console.log('Requester User ID:', requesterUserId);
+//       console.log('Receiver User ID:', receiverUserId);
+  
+//       // Start a session and transaction for atomicity
+//       const session = await User.startSession();
+//       session.startTransaction();
+  
+//       try {
+//         // // Move receiver's user ID to requester's friends array
+//         // await User.findByIdAndUpdate(
+//         //   requesterUserId,
+//         //   { $push: { friends: receiverUserId } },
+//         //   { new: true, useFindAndModify: false, session }
+//         // );
+  
+//         //   // Move requester's user ID to receiver's friends array
+//         //   await User.findByIdAndUpdate(
+//         //       receiverUserId,
+//         //       { $push: { friends: requesterUserId } },
+//         //       { new: true, useFindAndModify: false, session }
+//         //   );
+
+//           // Remove requester's user ID from receiver's pending array
+//           await User.findByIdAndUpdate(
+//             requesterUserId,
+//               { $pull: { pending: receiverUserId._id } },
+//               { new: true, useFindAndModify: false, session }
+//           );
+
+//           // Remove receiver's user ID from requester's pending array
+//           await User.findByIdAndUpdate(
+//             receiverUserId,
+//               { $pull: { pending: requesterUser._id } },
+//               { new: true, useFindAndModify: false, session }
+//           );
+
+//         //   // Remove requester's user ID from receiver's pending array
+//         //   await User.findByIdAndUpdate(
+//         //     requesterUserId,
+//         //       { $pull: { pending: requesterUserId } },
+//         //       { new: true, useFindAndModify: false, session }
+//         //   );
+
+//         //   // Remove receiver's user ID from requester's pending array
+//         //   await User.findByIdAndUpdate(
+//         //     receiverUserId,
+//         //       { $pull: { pending: receiverUserId } },
+//         //       { new: true, useFindAndModify: false, session }
+//         //   );
+
+//           // Commit the transaction
+//           await session.commitTransaction();
+//           session.endSession();
+
+//         return { message: 'Friend request accepted successfully' };
+//       } catch (err) {
+//         // Abort the transaction if any error occurs
+//         await session.abortTransaction();
+//         session.endSession();
+//         throw err;
+//       }
+//     } catch (err: any) {
+//       throw new Error(`Failed to accept friend request: ${err.message}`);
+//     }
+//   }
+  
+export async function acceptFriendRequest(requesterName: string, receiverName: string) { 
     try {
       await connectToDB();
   
@@ -168,8 +314,8 @@ export async function acceptFriendRequest(requesterName: string, receiverName: s
         throw new Error('User(s) not found');
       }
   
-      const requesterUserId = requesterUser._id;
-      const receiverUserId = receiverUser._id;
+      const requesterUserId = requesterUser._id; 
+      const receiverUserId = receiverUser._id; 
   
       console.log('Requester User ID:', requesterUserId);
       console.log('Receiver User ID:', receiverUserId);
@@ -180,27 +326,27 @@ export async function acceptFriendRequest(requesterName: string, receiverName: s
   
       try {
         // // Move receiver's user ID to requester's friends array
-        // await User.findByIdAndUpdate(
-        //   requesterUserId,
-        //   { $push: { friends: receiverUserId } },
-        //   { new: true, useFindAndModify: false, session }
-        // );
+        await User.findByIdAndUpdate(
+          requesterUserId,
+          { $push: { friends: receiverUserId } },
+          { new: true, useFindAndModify: false, session }
+        );
   
-        //   // Move requester's user ID to receiver's friends array
-        //   await User.findByIdAndUpdate(
-        //       receiverUserId,
-        //       { $push: { friends: requesterUserId } },
-        //       { new: true, useFindAndModify: false, session }
-        //   );
+          // Move requester's user ID to receiver's friends array
+          await User.findByIdAndUpdate(
+              receiverUserId,
+              { $push: { friends: requesterUserId } },
+              { new: true, useFindAndModify: false, session }
+          );
 
           // Remove requester's user ID from receiver's pending array
           await User.findByIdAndUpdate(
             requesterUserId,
-              { $pull: { pending: receiverUserId._id } },
+              { $pull: { requested: receiverUserId._id } },
               { new: true, useFindAndModify: false, session }
           );
 
-          // Remove receiver's user ID from requester's pending array
+          // Remove receiver's user ID from requester's requested array
           await User.findByIdAndUpdate(
             receiverUserId,
               { $pull: { pending: requesterUser._id } },
@@ -236,4 +382,3 @@ export async function acceptFriendRequest(requesterName: string, receiverName: s
       throw new Error(`Failed to accept friend request: ${err.message}`);
     }
   }
-  
