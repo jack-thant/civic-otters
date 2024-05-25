@@ -65,14 +65,15 @@ export async function getUserByEmail(
     }
 };
 
-export async function getUserFriends(userId: string) {
+export async function getUserFriends(name: string) {
     try {
         await connectToDB();
-        
-        // Find the user by ID
-        const user = await getUser(userId);
 
-        console.log(user)
+        // Find the user
+        const user = await getUserByName(name);
+        if (!user) {
+            throw new Error('User not found');
+        }
 
         // Extract friend IDs from the user's friends array
         const friendIds = user.friends;
@@ -81,6 +82,9 @@ export async function getUserFriends(userId: string) {
         const friends = await User.find({ _id: { $in: friendIds } });
 
         // Return friends as plain objects
+        if (!friends || friends == null) {
+            return [];
+        }
         return friends.map(friend => friend.toObject());
     } catch (err: any) {
         throw new Error(`Failed to fetch user friends: ${err.message}`);

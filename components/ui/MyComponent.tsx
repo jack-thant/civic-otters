@@ -65,7 +65,7 @@ function MyComponent() {
     const handleGetUserFriends = async (userId: string) => {
         try {
             const friends = await getUserFriends(userId);
-            if (friends == null) {
+            if (friends == null || friends.length == 0) {
                 console.log("No friends")
             } else {
                 console.log(friends);
@@ -131,13 +131,13 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        _id: "6651f520191db42519621f9b",
-        email: "testing@gmail.com",
+        _id: "6651f520191db42519621f1b",
+        email: "organizer1@gmail.com",
         userImage: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
         password: "password",
         isNewUser: true,
-        name: "testing",
-        DOB: "2011-11-15",
+        name: "organizer1",
+        DOB: "2001-11-15",
         userType: 400,
         xp: 0,
         friends: [],
@@ -145,19 +145,19 @@ function MyComponent() {
         interests: ["Gardening", "DIY", "Sculpture"],
         requested: [],
         pending: [],
-        events: ["6651f520191db42519621f9b"],
+        events: [],
     };
 
     const newOpportunity: typeof Opportunity = {
-        name: "ggg",
+        name: "Send Off",
         imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
-        description: "ggg desc",
+        description: "Send People Off to flights",
         availableSlots: 100,
-        venue: "ggg place",
+        venue: "Changi Airport",
         date: "2010-11-15",
-        tags: ["Gardening", "DIY", "Sculpture"],
-        participants: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
-        organizerContact: ["6651e54ef3cb242171a6a9e0"],
+        tags: ["Money"],
+        participants: [],
+        organizerContact: [],
         xp: 200,
     };
 
@@ -210,23 +210,23 @@ function MyComponent() {
         <div>
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651f520191db42519621f9b')}>Get User by ID</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('testing@gmail.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651e3a081f554ce4a802128')}>Get User Friends</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651f520191db42519621f9e')}>Delete User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('testing')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('testing')}>Get User by Name</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('1c', '1d')}>Add Friend</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('1d', '1c')}>Accept Friend Request</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('testing', 'testing2')}>Add Friend</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('testing2', 'testing')}>Accept Friend Request</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('testing')}>Get Events</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('testing')}>Get All Friends Events</button><br />
 
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651f520191db42519621f9b')}>Get Opportunity by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity('6651ee9991b2c0fb293c7d34')}>Delete Opportunity</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity("66522f2d2ec4e8e963175ed3")}>Delete Opportunity</button><br />
         </div>
     );
 }
