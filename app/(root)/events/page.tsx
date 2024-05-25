@@ -13,7 +13,7 @@ export default async function EventsPage() {
   // Sample data for containers
   const containers = await fetchAllOpportunities();
   return (
-    <div className="p-8  bg-gray-100">
+    <div className="p-8 bg-gray-100">
       <h2 className="mb-6 text-2xl font-bold text-gray-800 md:text-3xl">
         Volunteer Events
       </h2>
