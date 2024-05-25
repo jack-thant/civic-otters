@@ -15,17 +15,20 @@ export async function fetchAllUsers() {
     }
 }
 
-export async function addNewUser(
-    userData: typeof User
-) {
+export async function addNewUser(userData: typeof User) {
     try {
         await connectToDB();
-        // userData.isNewUser = true;
-        // userData.DOB = "2001-11-15";
-        // userData.userType = 0;
-        // userData.interests = ["Community", "Health"];
 
-        // console.log()
+        // Modify the userData object before creating the user
+        userData = {
+            ...userData,
+            isNewUser: true,
+            DOB: new Date("2001-11-15"), // Ensure DOB is a Date object
+            userType: 0,
+            interests: ["Community", "Health"]
+        };
+
+        console.log(userData);
 
         const newUser = new User(userData);
         const savedUser = await newUser.save();
@@ -33,7 +36,7 @@ export async function addNewUser(
     } catch (err: any) {
         throw new Error(`Failed to add new user: ${err.message}`);
     }
-};
+}
 
 export async function editUser(
     userId: string,

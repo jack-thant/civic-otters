@@ -157,22 +157,22 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        _id: "6651f520191db425196212f6",
-        email: "germany@gmail.com",
+        _id: "6651f520191db425196215f6",
+        email: "japan@gmail.com",
         userImage: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/otter.jpg",
         password: "password", 
         isNewUser: true, // can update
-        name: "germany",
-        DOB: "2001-11-15", // hardcode
-        userType: 0, // hardcode
+        name: "japan",
+        DOB: "2001-11-15", // set
+        userType: 0, // set
         xp: 0,
         friends: [],
-        achievements: [], 
-        interests: ["Gardening", "DIY", "Sculpture"], // take two
+        achievements: ["665240e2691ec84cdc77ea12"],
+        interests: [], // take two
         requested: [],
         pending: [],
         events: [],
-        clerk_id: "123123123123"
+        clerk_id: "",
     };
 
     const newOpportunity: typeof Opportunity = {
