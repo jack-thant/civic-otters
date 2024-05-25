@@ -7,15 +7,13 @@ import { use, useEffect, useState } from 'react';
 import User from '@/lib/models/user.model';
 
 export default async function FriendTable({
-    query, users
+    query, users, currUser
 } : {
     query : string;
-    users : typeof User
+    users : typeof User,
+    currUser: typeof User
 }) {
-    // console.log(users);
-    const _id = "6651f520191db42519621f9b"
-    const currUser = await getUser(_id);
-    // console.log(currUser)
+    console.log(users)
     if (query !== '') {
 
     }
@@ -68,12 +66,12 @@ export default async function FriendTable({
                                 values={user.interests} />
                             </td>
                             <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                                {currUser.friends.includes(user._id) ? <div>Friend</div>  : currUser.pending.includes(user._id) ? <div>Pending</div> : 
-                                    currUser.requested.includes(user._id) ? 
+                                {currUser.friends.toString().includes(user._id) ? <div>Friend</div>  : currUser.pending.toString().includes(user._id) ? <div>Pending</div> : 
+                                    currUser.requested.toString().includes(user._id) ? 
                                     <div>
                                     <AcceptFriend/>
                                     <RejectFriend/>
-                                    </div> : <AddFriend currUserId={currUser._id} targetId={user._id} />
+                                    </div> : <AddFriend currUserId={currUser.name} targetId={user.name} />
                                 }
                             </td>
                         </tr>

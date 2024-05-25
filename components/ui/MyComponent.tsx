@@ -1,12 +1,30 @@
 "use client"
 
-import { fetchAllUsers, getUser, getUserByEmail, addNewUser } from '@/lib/actions/user.actions';
-import { fetchAllOpportunities, getOpportunity, addNewOpportunity } from '@/lib/actions/opportunity.actions';
-import { User } from '@/lib/models/user.model';
+import { 
+    fetchAllUsers, 
+    getUser, 
+    getUserByEmail, 
+    addNewUser, 
+    deleteUser,
+    getUserFriends,
+    checkName,
+    addFriend,
+    getUserByName,
+    acceptFriendRequest,
+    getUserOpportunities,
+    getFriendEvents,
+    registerForEvent
+} from '@/lib/actions/user.actions';
+import { 
+    fetchAllOpportunities, 
+    getOpportunity,
+    addNewOpportunity, 
+    deleteOpportunity 
+} from '@/lib/actions/opportunity.actions';
+import User from '@/lib/models/user.model';
 import Opportunity from '@/lib/models/opportunity.model';
-// import { Opportunity } from '@/lib/models/opportunityModel';
 
-export default function MyComponent() {
+function MyComponent() {
 
     const handleFetchUsers = async () => {
         try {
@@ -26,6 +44,16 @@ export default function MyComponent() {
         }
     };
 
+    const handleDeleteUser = async (userId: string) => {
+        try {
+            const fetchedUser = await deleteUser(userId);
+            console.log("deleted", fetchedUser);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+    
+
     const handleGetUserByEmail = async (email: string) => {
         try {
             const fetchedUser = await getUserByEmail(email);
@@ -35,28 +63,111 @@ export default function MyComponent() {
         }
     };
 
+    const handleGetUserFriends = async (userId: string) => {
+        try {
+            const friends = await getUserFriends(userId);
+            if (friends == null || friends.length == 0) {
+                console.log("No friends")
+            } else {
+                console.log(friends);
+            }
+            
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleCheckName = async (name: string) => {
+        try {
+            const user = await checkName(name);
+            console.log(user !== null);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleGetUserByName = async (name: string) => {
+        try {
+            const user = await getUserByName(name);
+            console.log(user);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleAddFriend = async (requesterName: string, receiverName: string) => {
+        try {
+            const response = await addFriend(requesterName, receiverName);
+            console.log(response.message);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleAcceptFriendRequest = async (requesterName: string, receiverName: string) => {
+        try {
+            const response = await acceptFriendRequest(requesterName, receiverName);
+            console.log(response.message);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleGetUserEvents = async (name: string) => {
+        try {
+            const events = await getUserOpportunities(name);
+            console.log(events);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleGetFriendEvents = async (name: string) => {
+        try {
+            const events = await getFriendEvents(name);
+            console.log(events);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleRegisterForEvent = async (name: string, eventId: string) => {
+        try {
+            const res = await registerForEvent(name, eventId);
+            console.log(res);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        email: "user1@example.com",
-        userImage: "https://example.com/expert.jpg",
-        password: "passwordABC",
+        _id: "6651f520191db42519621f1e",
+        email: "testing5@gmail.com",
+        userImage: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/otter.jpg",
+        password: "password",
         isNewUser: true,
-        name: "expert expert",
-        DOB: "2010-11-15",
-        userType: 400,
+        name: "testing5",
+        DOB: "2001-11-15",
+        userType: 0,
         xp: 0,
         friends: [],
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
         requested: [],
-        pending: []
+        pending: [],
+        events: [],
     };
 
     const newOpportunity: typeof Opportunity = {
-        name: "drinking",
-        description: "drinking desc",
+        name: "Send Off",
+        imageUrl: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/walk.png",
+        description: "Send People Off to flights",
         availableSlots: 100,
-        venue: "drinking place",
+        venue: "Changi Airport",
         date: "2010-11-15",
+        tags: ["Money"],
+        participants: [],
+        organizerContact: [],
         xp: 200,
     };
 
@@ -96,17 +207,39 @@ export default function MyComponent() {
         }
     };
 
+    const handleDeleteOpportunity = async (id: string) => {
+        try {
+            const fetchedOpportunity = await deleteOpportunity(id);
+            console.log("deleted", fetchedOpportunity);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     return (
         <div>
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('66519ca5d021f3503872d071')}>Get User by ID</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651f520191db42519621f9b')}>Get User by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('testing@gmail.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651f520191db42519621f9e')}>Delete User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('testing')}>Get User Friends</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('testing')}>Get User by Name</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('testing3', 'testing2')}>Add Friend</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('', 'testing1')}>Accept Friend Request</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('testing')}>Get Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('testing')}>Get All Friends Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleRegisterForEvent('testing5', "66523f3b2ec4e8e963175f8f")}>Register for Event</button><br />
+
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651f520191db42519621f9b')}>Get Opportunity by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity("66523e4e2ec4e8e963175f7e")}>Delete Opportunity</button><br />
         </div>
     );
 }
+
+export default MyComponent;

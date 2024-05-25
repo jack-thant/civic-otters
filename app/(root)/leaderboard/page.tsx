@@ -35,7 +35,7 @@ export default async function Leaderboard() {
                   {i + 1}.
                 </span>
                 <Image
-                  src={user.image_url}
+                  src={user.userImage}
                   alt={`${user.name}'s profile picture`}
                   className="mr-4 rounded-full"
                   width={40}

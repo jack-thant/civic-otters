@@ -1,9 +1,10 @@
 'use client'
+import { addFriend} from '@/lib/actions/user.actions';
 
-
-export function AddFriend({currUserId, targetId} : {currUserId : number, targetId : number}) {
-    const handleAddFriend = () => {
-        console.log(currUserId, targetId)
+export function AddFriend({requesterName, receiverName} : {requesterName : string, receiverName : string}) {
+    const handleAddFriend = async () => {
+        console.log(requesterName, receiverName)
+        await addFriend(requesterName, receiverName)
     }
     return (
         <button className="text-blue bg-sky-100 rounded-md p-3 hover:bg-sky-300" onClick={handleAddFriend}>Add Friend</button>

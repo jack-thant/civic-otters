@@ -21,7 +21,7 @@ export default async function Page({
                 <Search placeholder="Search your otters"/>
             </div>
             <Suspense key={query}>
-                <Table query={query} users={users}/>
+                <Table query={query} users={users} currUser={users[0]}/>
             </Suspense>
         </div>
     )
