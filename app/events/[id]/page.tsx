@@ -1,12 +1,16 @@
 import Form from '@/components/ui/event-detail';
 import Breadcrumbs from '@/components/ui/breadcrumbs';
-import { fetchEventById} from '@/lib/data';
+import {
+  fetchAllOpportunities,
+  getOpportunity,
+  addNewOpportunity,
+} from "@/lib/actions/opportunityActions";
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
     const [event] = await Promise.all([
-        fetchEventById(id),
+      getOpportunity(id),
       ]);
       if (!event) {
         notFound();

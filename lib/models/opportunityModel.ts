@@ -3,13 +3,14 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 export const opportunitySchema = new Schema({
-    id: {
-        type: Number,
-        required: true,
-        unique: true,
-    },
+    // id: {
+    //     type: Number,
+    //     required: true,
+    //     unique: true,
+    // },
     name: { 
         type: String,
+        unique: true,
         required: true
     },
     description: {
@@ -44,4 +45,6 @@ export const opportunitySchema = new Schema({
     },
 });
 
-export const Opportunity = mongoose.model('Opportunity', opportunitySchema);
+const Opportunity = mongoose.models.Opportunity || mongoose.model('Opportunity', opportunitySchema);
+
+export default Opportunity;

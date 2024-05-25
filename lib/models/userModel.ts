@@ -32,6 +32,9 @@ export const userSchema = new Schema({
         type: Number,
         required: true
     },
+    xp: {
+        type: Number,
+    },
     friends: [{
         type: Schema.Types.ObjectId,
         ref: 'User' // Referencing the User model

@@ -30,15 +30,12 @@ export default function RootLayout({
       <html lang='en'>
         <body className={inter.className}>
           <Topbar />
-
-          <main className='flex flex-row'>
+          <main className='flex flex-row h-screen'>
             <LeftSidebar />
-            <section className='main-container'>
-              <div className='w-full'>{children}</div>
+            <section className='flex-grow'>
+              <div className='w-full h-full'>{children}</div>
             </section>
-
           </main>
-
           {/* <Bottombar /> */}
         </body>
       </html>

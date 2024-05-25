@@ -3,48 +3,75 @@ import { Badge } from "@/components/ui/badge";
 
 export interface ContainerProps {
   id: string;
-  title?: string;
+  name?: string;
   img?: string;
-  date?: String;
+  date?: Date;
   description?: string;
   tags?: string[];
+  availableSlots?: number;
+  venue?: string;
+  organizerContact?: any;
 }
 
 const Container = ({
   id,
-  title,
+  name,
   img,
   date,
   description,
   tags,
+  availableSlots,
+  venue,
+  organizerContact,
 }: ContainerProps) => {
+  // Function to format date components
+  const formatDate = (date: Date | undefined) => {
+    if (!date) return "";
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Month is zero-indexed
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
+    return formattedDate;
+  };
+
   return (
-    <div className="flex justify-between mb-4">
-      <div
-        className={clsx(
-          "relative flex-none w-full p-4 bg-white rounded-lg shadow-md border"
+    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      {img && (
+        <img
+          src={img}
+          alt={name}
+          className="w-full h-40 object-cover object-center"
+        />
+      )}
+      <div className="p-4">
+        <h1 className="text-lg font-semibold text-green-800 mb-2">{name}</h1>
+        <p className="text-sm text-gray-600 mb-2">
+          <span className="font-semibold">Date:</span> {formatDate(date)}
+        </p>
+        {venue && (
+          <p className="text-sm text-gray-600 mb-2">
+            <span className="font-semibold">Venue:</span> {venue}
+          </p>
         )}
-      >
-        {img && (
-          <img
-            src={img}
-            alt={title}
-            className="w-full h-32 object-cover rounded-t-lg"
-          />
+        {availableSlots !== undefined && (
+          <p className="text-sm text-gray-600 mb-2">
+            <span className="font-semibold">Available Slots:</span>{" "}
+            {availableSlots}
+          </p>
         )}
-        <div className="flex flex-col mb-4">
-          <div className="flex items-center justify-between">
-            <h1 className="p-2 text-green-800 text-lg font-semibold">
-              {title}
-            </h1>
-          </div>
-          <p className="p-2 text-gray-600 text-sm">{date}</p>
-          <p className="p-2 text-gray-600 text-sm">{description}</p>
-        </div>
+
+        {description && (
+          <p className="text-sm text-gray-600 mb-2">
+            <span className="font-semibold">Description:</span> {description}
+          </p>
+        )}
+
         {tags && tags.length > 0 && (
-          <div className="p-2 flex flex-wrap">
+          <div className="flex flex-wrap">
             {tags.slice(0, 3).map((tag, index) => (
-              <span key={index}>
+              <span key={index} className="mr-2 mb-2">
                 <Badge
                   className="font-semibold shadow-md border"
                   variant="outline"

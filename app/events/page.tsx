@@ -1,74 +1,38 @@
-"use client";
 // pages/events/index.tsx
 import { useState } from "react";
 import Link from "next/link";
 import Container from "@/components/cards/event-card";
+import Image from "@assets/cat.png";
+import {
+  fetchAllOpportunities,
+  getOpportunity,
+  addNewOpportunity,
+} from "@/lib/actions/opportunityActions";
 
-export default function EventsPage() {
+export default async function EventsPage() {
   // Sample data for containers
-  const [containers, setContainers] = useState([
-    {
-      id: "1",
-      title: "Event 1",
-      description: "Description for event 1",
-      date: "2024-05-01",
-      img: "/path/to/image1.jpg",
-      tags: ["wow", "cool"],
-    },
-    {
-      id: "2",
-      title: "Event 2",
-      description: "Description for event 2",
-      date: "2024-05-02",
-      img: "/path/to/image2.jpg",
-      tags: ["wow", "cool"],
-    },
-    {
-      id: "3",
-      title: "Event 3",
-      description: "Description for event 3",
-      date: "2024-05-03",
-      img: "/path/to/image3.jpg",
-      tags: ["wow", "cool"],
-    },
-    {
-      id: "4",
-      title: "Event 4",
-      description: "Description for event 4",
-      date: "2024-05-04",
-      img: "/path/to/image4.jpg",
-      tags: ["wow", "cool"],
-    },
-    {
-      id: "5",
-      title: "Event 5",
-      description: "Description for event 5",
-      date: "2024-05-05",
-      img: "/path/to/image5.jpg",
-      tags: ["wow", "cool"],
-    },
-    {
-      id: "6",
-      title: "Event 6",
-      description: "Description for event 6",
-      date: "2024-05-06",
-      img: "/path/to/image6.jpg",
-      tags: ["wow", "cool"],
-    },
-  ]);
-
+  const containers = await fetchAllOpportunities();
   return (
-    <div className="p-8">
+    <div className="p-8  bg-gray-100">
+      <h2 className="mb-6 text-2xl font-bold text-gray-800 md:text-3xl">
+        Volunteer Events
+      </h2>
+      <p className="mb-6 text-sm font-bold text-gray-800 md:text-l">
+        Recommended for you.
+      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {containers.map((container) => (
-          <Link key={container.id} href={`/events/${container.id}`}>
+          <Link key={container._id} href={`/events/${container._id}`}>
             <Container
-              id={container.id}
+              id={container._id}
               date={container.date}
-              img={container.img}
-              title={container.title}
+              img={container.imageUrl} // Ensure you use the correct property name
+              name={container.name}
               description={container.description}
               tags={container.tags}
+              availableSlots={container.availableSlots}
+              venue={container.venue}
+              organizerContact={container.organizerContact}
             />
           </Link>
         ))}
