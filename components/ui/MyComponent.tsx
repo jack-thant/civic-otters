@@ -3,7 +3,8 @@
 import { fetchAllUsers, getUser, getUserByEmail, addNewUser } from '@/lib/actions/userActions';
 import { fetchAllOpportunities, getOpportunity, addNewOpportunity } from '@/lib/actions/opportunityActions';
 import User from '@/lib/models/userModel';
-import { Opportunity } from '@/lib/models/opportunityModel';
+import Opportunity from '@/lib/models/opportunityModel';
+// import { Opportunity } from '@/lib/models/opportunityModel';
 
 function MyComponent() {
 
@@ -35,14 +36,14 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        email: "orange@example.com",
-        userImage: "https://example.com/orange.jpg",
+        email: "expert@example.com",
+        userImage: "https://example.com/expert.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "orange orange",
-        DOB: "1999-11-15",
-        userType: 0,
-        xp: 100,
+        name: "expert expert",
+        DOB: "2010-11-15",
+        userType: 400,
+        xp: 0,
         friends: [],
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
@@ -51,10 +52,10 @@ function MyComponent() {
     };
 
     const newOpportunity: typeof Opportunity = {
-        name: "Mining",
-        description: "Mining desc",
+        name: "drinking",
+        description: "drinking desc",
         availableSlots: 100,
-        venue: "dbsxxxxx",
+        venue: "drinking place",
         date: "2010-11-15",
         xp: 200,
     };
@@ -101,6 +102,7 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUser('66519ca5d021f3503872d071')}>Get User by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
+            <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />

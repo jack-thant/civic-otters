@@ -1,7 +1,8 @@
 "use server"
 
 import { connectToDB } from '@/lib/mongoose';
-import { Opportunity } from '@/lib/models/opportunityModel';
+import Opportunity from '@/lib/models/opportunityModel';
+// import mongoose from 'mongoose';
 
 export async function fetchAllOpportunities() {
     try {
@@ -29,6 +30,8 @@ export async function addNewOpportunity(
     try {
         await connectToDB();
 
+        console.log(oppData)
+
         const newOpportunity = new Opportunity(oppData);
         const savedOpportunity = await newOpportunity.save();
         return savedOpportunity ? savedOpportunity.toObject() : null;
@@ -36,3 +39,19 @@ export async function addNewOpportunity(
         throw new Error(`Failed to add new user: ${err.message}`);
     }
 };
+
+// export async function addNewOpportunity(oppData: typeof Opportunity) {
+//     try {
+//         await connectToDB();
+
+//         // Generate a unique ObjectId for the opportunity
+//         console.log(oppData)
+//         oppData._id = new mongoose.Types.ObjectId();
+
+//         const newOpportunity = new Opportunity(oppData);
+//         const savedOpportunity = await newOpportunity.save();
+//         return savedOpportunity ? savedOpportunity.toObject() : null;
+//     } catch (err: any) {
+//         throw new Error(`Failed to add new opportunity: ${err.message}`);
+//     }
+// }

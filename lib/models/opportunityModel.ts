@@ -10,6 +10,7 @@ export const opportunitySchema = new Schema({
     // },
     name: { 
         type: String,
+        unique: true,
         required: true
     },
     description: {
@@ -44,4 +45,6 @@ export const opportunitySchema = new Schema({
     },
 });
 
-export const Opportunity = mongoose.model('Opportunity', opportunitySchema);
+const Opportunity = mongoose.models.Opportunity || mongoose.model('Opportunity', opportunitySchema);
+
+export default Opportunity;
