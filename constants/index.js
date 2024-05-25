@@ -5,6 +5,11 @@ export const sidebarLinks = [
       label: "Home",
     },
     {
+      imgURL: "/assets/event.svg",
+      route: "/events",
+      label: "Events",
+    },
+    {
         imgURL: "/assets/user.svg",
         route: "/profile",
         label: "Profile",
@@ -12,7 +17,7 @@ export const sidebarLinks = [
     {
       imgURL: "/assets/search.svg",
       route: "/search",
-      label: "Search",
+      label: "Search OtterPals",
     },
     {
       imgURL: "/assets/community.svg",
