@@ -12,8 +12,8 @@ import Topbar from "@/components/shared/Topbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Threads",
-  description: "A Next.js 13 Meta Threads application",
+  title: "Civic Otters",
+  description: "A social app for volunteers",
 };
 
 export default function RootLayout({
@@ -34,13 +34,12 @@ export default function RootLayout({
           <main className='flex flex-row'>
             <LeftSidebar />
             <section className='main-container'>
-              <div className='w-full max-w-4xl'>{children}</div>
+              <div className='w-full'>{children}</div>
             </section>
-            {/* @ts-ignore */}
-            {/* <RightSidebar /> */}
+
           </main>
 
-          <Bottombar />
+          {/* <Bottombar /> */}
         </body>
       </html>
     </ClerkProvider>
