@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 
 export interface ContainerProps {
   id: string;
@@ -37,7 +38,7 @@ const Container = ({
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="bg-dark-2 shadow-lg rounded-lg overflow-hidden">
       {img && (
         <img
           src={img}
@@ -45,36 +46,42 @@ const Container = ({
           className="w-full h-40 object-cover object-center"
         />
       )}
-      <div className="p-4">
-        <h1 className="text-lg font-semibold text-green-800 mb-2">{name}</h1>
-        <p className="text-sm text-gray-600 mb-2">
-          <span className="font-semibold">Date:</span> {formatDate(date)}
+      <div className="flex flex-col gap-2 p-4">
+        <p className="text-xs font-bold text-secondary-500 mb-2">
+          {formatDate(date)}
         </p>
-        {venue && (
-          <p className="text-sm text-gray-600 mb-2">
-            <span className="font-semibold">Venue:</span> {venue}
+        <h3 className="text-heading3-bold text-primary-500">{name}</h3>
+        {/* {description && (
+          <p className="mt-2 text-small-regular text-light-2">
+            {description}
           </p>
+        )} */}
+
+        {venue && (
+          <div className="flex flex-row items-center gap-x-2">
+            <Image src="./assets/map-pin.svg" alt='map-pin' width={18} height={18}/>
+            <p className="subtle-medium text-light-2 ">
+              {venue}
+            </p>
+          </div>
+
         )}
         {availableSlots !== undefined && (
-          <p className="text-sm text-gray-600 mb-2">
-            <span className="font-semibold">Available Slots:</span>{" "}
-            {availableSlots}
+          <div className="flex flex-row items-center gap-x-2">
+          <Image src="./assets/community.svg" alt='map-pin' width={18} height={18}/>
+          <p className="subtle-medium text-light-2 ">
+            {availableSlots}{" slots left"}
           </p>
-        )}
-
-        {description && (
-          <p className="text-sm text-gray-600 mb-2">
-            <span className="font-semibold">Description:</span> {description}
-          </p>
+        </div>
         )}
 
         {tags && tags.length > 0 && (
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap mt-3">
             {tags.slice(0, 3).map((tag, index) => (
               <span key={index} className="mr-2 mb-2">
                 <Badge
-                  className="font-semibold shadow-md border"
-                  variant="outline"
+                  className="font-semibold bg-dark-3 text-light-4 py-2"
+                  variant="default"
                 >
                   {tag}
                 </Badge>
