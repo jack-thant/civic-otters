@@ -14,7 +14,7 @@ async function Page()
         name: userInfo?.name || user?.firstName || "",
         role: userInfo?.role,
         dateOfBirth: userInfo?.dathOfBirth,
-        skills: userInfo?.skills,
+        skills: userInfo?.interest,
         image: userInfo?.image || user?.imageUrl,
     }
 
