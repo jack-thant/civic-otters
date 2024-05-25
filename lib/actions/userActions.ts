@@ -98,3 +98,142 @@ export async function checkName(name: string) {
         throw new Error(`Failed to check user name: ${err.message}`);
     }
 }
+
+
+export async function getUserByName(name: string) {
+    try {
+        await connectToDB();
+        
+        // Find the user by name
+        const user = await User.findOne({ name });
+        return user ? user.toObject() : null;
+    } catch (err: any) {
+        throw new Error(`Failed to check user name: ${err.message}`);
+    }
+}
+
+export async function addFriend(requesterName: string, receiverName: string) {
+    try {
+        await connectToDB();
+
+        const [requesterUser, receiverUser] = await Promise.all([
+            getUserByName(requesterName),
+            getUserByName(receiverName)
+        ]);
+
+        if (!requesterUser || !receiverUser) {
+            throw new Error('User(s) not found');
+        }
+
+        const requesterUserId = requesterUser._id;
+        const receiverUserId = receiverUser._id;
+
+        console.log('Requester User ID:', requesterUserId);
+        console.log('Receiver User ID:', receiverUserId);
+
+        // Add receiver's user ID to requester's pending array
+        const updatedRequester = await User.findByIdAndUpdate(
+            requesterUserId,
+            { $push: { pending: receiverUserId } },
+            { new: true, useFindAndModify: false }
+        );
+
+        // Add requester's user ID to receiver's requested array
+        const updatedReceiver = await User.findByIdAndUpdate(
+            receiverUserId,
+            { $push: { requested: requesterUserId } },
+            { new: true, useFindAndModify: false }
+        );
+
+        if (!updatedRequester || !updatedReceiver) {
+            throw new Error('Failed to update user records');
+        }
+
+        return { message: 'Friend request sent successfully' };
+    } catch (err: any) {
+        throw new Error(`Failed to send friend request: ${err.message}`);
+    }
+}
+
+export async function acceptFriendRequest(requesterName: string, receiverName: string) {
+    try {
+      await connectToDB();
+  
+      const [requesterUser, receiverUser] = await Promise.all([
+        getUserByName(requesterName),
+        getUserByName(receiverName),
+      ]);
+  
+      if (!requesterUser || !receiverUser) {
+        throw new Error('User(s) not found');
+      }
+  
+      const requesterUserId = requesterUser._id;
+      const receiverUserId = receiverUser._id;
+  
+      console.log('Requester User ID:', requesterUserId);
+      console.log('Receiver User ID:', receiverUserId);
+  
+      // Start a session and transaction for atomicity
+      const session = await User.startSession();
+      session.startTransaction();
+  
+      try {
+        // // Move receiver's user ID to requester's friends array
+        // await User.findByIdAndUpdate(
+        //   requesterUserId,
+        //   { $push: { friends: receiverUserId } },
+        //   { new: true, useFindAndModify: false, session }
+        // );
+  
+        //   // Move requester's user ID to receiver's friends array
+        //   await User.findByIdAndUpdate(
+        //       receiverUserId,
+        //       { $push: { friends: requesterUserId } },
+        //       { new: true, useFindAndModify: false, session }
+        //   );
+
+          // Remove requester's user ID from receiver's pending array
+          await User.findByIdAndUpdate(
+            requesterUserId,
+              { $pull: { pending: receiverUserId._id } },
+              { new: true, useFindAndModify: false, session }
+          );
+
+          // Remove receiver's user ID from requester's pending array
+          await User.findByIdAndUpdate(
+            receiverUserId,
+              { $pull: { pending: requesterUser._id } },
+              { new: true, useFindAndModify: false, session }
+          );
+
+        //   // Remove requester's user ID from receiver's pending array
+        //   await User.findByIdAndUpdate(
+        //     requesterUserId,
+        //       { $pull: { pending: requesterUserId } },
+        //       { new: true, useFindAndModify: false, session }
+        //   );
+
+        //   // Remove receiver's user ID from requester's pending array
+        //   await User.findByIdAndUpdate(
+        //     receiverUserId,
+        //       { $pull: { pending: receiverUserId } },
+        //       { new: true, useFindAndModify: false, session }
+        //   );
+
+          // Commit the transaction
+          await session.commitTransaction();
+          session.endSession();
+
+        return { message: 'Friend request accepted successfully' };
+      } catch (err) {
+        // Abort the transaction if any error occurs
+        await session.abortTransaction();
+        session.endSession();
+        throw err;
+      }
+    } catch (err: any) {
+      throw new Error(`Failed to accept friend request: ${err.message}`);
+    }
+  }
+  

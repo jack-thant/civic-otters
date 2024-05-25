@@ -7,7 +7,10 @@ import {
     addNewUser, 
     deleteUser,
     getUserFriends,
-    checkName
+    checkName,
+    addFriend,
+    getUserByName,
+    acceptFriendRequest
 } from '@/lib/actions/userActions';
 import { 
     fetchAllOpportunities, 
@@ -75,20 +78,47 @@ function MyComponent() {
         }
     };
 
+    const handleGetUserByName = async (name: string) => {
+        try {
+            const user = await getUserByName(name);
+            console.log(user);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleAddFriend = async (requesterName: string, receiverName: string) => {
+        try {
+            const response = await addFriend(requesterName, receiverName);
+            console.log(response.message);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleAcceptFriendRequest = async (requesterName: string, receiverName: string) => {
+        try {
+            const response = await acceptFriendRequest(requesterName, receiverName);
+            console.log(response.message);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        email: "aaa@example.com",
-        userImage: "https://example.com/aaa.jpg",
+        email: "vv@example.com",
+        userImage: "https://example.com/vv.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "aaa aaa",
+        name: "vv",
         DOB: "2010-11-15",
         userType: 400,
         xp: 0,
-        friends: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
+        friends: [],
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
-        requested: ["6651e54ef3cb242171a6a9e0"],
-        pending: ["6651e54ef3cb242171a6a9e0"]
+        requested: [],
+        pending: []
     };
 
     const newOpportunity: typeof Opportunity = {
@@ -156,8 +186,12 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651f58c191db42519621fa8')}>Get User Friends</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651e3a081f554ce4a802128')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('grape grape')}>Get User by Name</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('uu', 'vv')}>Add Friend</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('uu', 'vv')}>Accept Friend Request</button><br />
+
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
