@@ -324,7 +324,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                                 >
                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                         <FormControl>
-                                            <RadioGroupItem value="all" className="aria-checked:bg-light-1" />
+                                            <RadioGroupItem value={Role.Volunteer} className="aria-checked:bg-light-1" />
                                         </FormControl>
                                         <FormLabel className="text-light-1 no-focus">
                                             {Role.Volunteer}
@@ -332,7 +332,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                                     </FormItem>
                                     <FormItem className="flex items-center space-x-3 space-y-0">
                                         <FormControl>
-                                            <RadioGroupItem value="none" className="aria-checked:bg-light-1" />
+                                            <RadioGroupItem value={Role.CommunityPartner} className="aria-checked:bg-light-1" />
                                         </FormControl>
                                         <FormLabel className="text-light-1 no-focus">{Role.CommunityPartner}</FormLabel>
                                     </FormItem>
