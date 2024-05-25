@@ -8,8 +8,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default async function ActivityPage() {
-  const friendActivity = await getFriendEvents("testing");
-  const userActivity = await getUserOpportunities("testing");
+  const friendActivity = await getFriendEvents("alice");
+  const userActivity = await getUserOpportunities("alice");
 
   const normalizeActivityData = (friendActivities, userActivities) => {
     const normalizedFriendActivities = friendActivities.flatMap((friend) =>

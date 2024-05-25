@@ -26,6 +26,7 @@ import { cn, isBase64Image } from "@/lib/utils";
 import { format } from "date-fns";
 import Select, { StylesConfig } from 'react-select';
 import { useUploadThing } from '@/lib/uploadthing'
+import Link from "next/link";
 
 const darkColors = {
     dark1: '#000000',
@@ -364,8 +365,10 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
                         </FormItem>
                     )}
                 />
-
-                <Button type="submit" className='bg-primary-500'>Submit</Button>
+                <Link className='w-full' href="/">
+                    <Button type="submit" className='bg-primary-500'>Submit</Button>
+                </Link>
+                
             </form>
         </Form>
     )
