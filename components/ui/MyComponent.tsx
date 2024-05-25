@@ -13,6 +13,7 @@ import {
     acceptFriendRequest,
     getUserOpportunities,
     getFriendEvents,
+    registerForEvent
 } from '@/lib/actions/user.actions';
 import { 
     fetchAllOpportunities, 
@@ -130,15 +131,24 @@ function MyComponent() {
         }
     };
 
+    const handleRegisterForEvent = async (name: string, eventId: string) => {
+        try {
+            const res = await registerForEvent(name, eventId);
+            console.log(res);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        _id: "6651f520191db42519621f1b",
-        email: "organizer1@gmail.com",
-        userImage: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
+        _id: "6651f520191db42519621f1e",
+        email: "testing5@gmail.com",
+        userImage: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/otter.jpg",
         password: "password",
         isNewUser: true,
-        name: "organizer1",
+        name: "testing5",
         DOB: "2001-11-15",
-        userType: 400,
+        userType: 0,
         xp: 0,
         friends: [],
         achievements: [],
@@ -150,7 +160,7 @@ function MyComponent() {
 
     const newOpportunity: typeof Opportunity = {
         name: "Send Off",
-        imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
+        imageUrl: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/walk.png",
         description: "Send People Off to flights",
         availableSlots: 100,
         venue: "Changi Airport",
@@ -216,17 +226,18 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('testing')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('testing')}>Get User by Name</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('testing', 'testing2')}>Add Friend</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('testing2', 'testing')}>Accept Friend Request</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAddFriend('testing1', 'testing2')}>Add Friend</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleAcceptFriendRequest('testing2', 'testing1')}>Accept Friend Request</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserEvents('testing')}>Get Events</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetFriendEvents('testing')}>Get All Friends Events</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleRegisterForEvent('testing5', "66523f3b2ec4e8e963175f8f")}>Register for Event</button><br />
 
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651f520191db42519621f9b')}>Get Opportunity by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
-            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity("66522f2d2ec4e8e963175ed3")}>Delete Opportunity</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity("66523e4e2ec4e8e963175f7e")}>Delete Opportunity</button><br />
         </div>
     );
 }

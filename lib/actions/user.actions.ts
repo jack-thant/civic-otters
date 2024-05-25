@@ -3,6 +3,7 @@
 import { connectToDB } from '@/lib/mongoose';
 import User from '@/lib/models/user.model';
 import Opportunity from '@/lib/models/opportunity.model';
+import mongoose from 'mongoose';
 
 export async function fetchAllUsers() {
     try {
@@ -290,4 +291,48 @@ export async function acceptFriendRequest(requesterName: string, receiverName: s
     }
   }
 
-  
+  export async function registerForEvent(username: string, eventId: string) {
+    try {
+        await connectToDB();
+
+        // Find the user by username
+        const user = await getUserByName(username);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        console.log('user is', user);
+
+        // Start a session and transaction for atomicity
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        try {
+            // Add the user's ID to the event's participants list
+            await Opportunity.findByIdAndUpdate(
+                eventId,
+                { $push: { participants: user._id } }, // Use $addToSet to prevent duplicate entries
+                { new: true, useFindAndModify: false, session }
+            );
+
+            // Add the event ID to the user's events list
+            await User.findByIdAndUpdate(
+                user._id,
+                { $push: { events: eventId } }, // Use $addToSet to prevent duplicate entries
+                { new: true, useFindAndModify: false, session }
+            );
+
+            // Commit the transaction
+            await session.commitTransaction();
+            session.endSession();
+
+            return { message: 'Registered successfully' };
+        } catch (err) {
+            // Abort the transaction if any error occurs
+            await session.abortTransaction();
+            session.endSession();
+            throw err;
+        }
+    } catch (err: any) {
+        throw new Error(`Failed to register: ${err.message}`);
+    }
+}
