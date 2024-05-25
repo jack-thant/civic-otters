@@ -5,13 +5,13 @@ import Image from "next/image";
 
 const tags: Array<string> = ["Mental Health", "Children", "Social Services"];
 const friends = [
-    {name: "James", interests: ["Sport", "Community", "Health"], src: "/images/person-1.jpeg"},
-    {name: "Billy", interests: ["Mental Health", "Social Services", "Health"], src: "/images/person-2.jpeg"},
-    {name: "Aaron", interests: ['Family', 'Environment', 'Animal'], src: "/images/person-3.jpeg"}
+    { name: "James", interests: ["Sport", "Community", "Health"], src: "/images/person-1.jpeg" },
+    { name: "Billy", interests: ["Mental Health", "Social Services", "Health"], src: "/images/person-2.jpeg" },
+    { name: "Aaron", interests: ['Family', 'Environment', 'Animal'], src: "/images/person-3.jpeg" }
 ]
 const achievements = [
-    {name: "Children Category", src: "./assets/award_red.svg"},
-    {name: "Social Services Category", src: "./assets/award_yellow.svg"},
+    { name: "Children Category", src: "./assets/award_red.svg" },
+    { name: "Social Services Category", src: "./assets/award_yellow.svg" },
 ]
 
 async function Page() {
@@ -47,7 +47,11 @@ async function Page() {
                 )}
             </div>
             {/* Friends List */}
-            <h4 className='heading4-medium text-light-1 pt-5 pb-2'>Friends</h4>
+            <div className="flex flex-row justify-between pt-5 pb-2">
+                <h4 className='heading4-medium text-light-1'>Friends</h4>
+                <h4 className='heading4-medium text-light-3'>View More</h4>
+            </div>
+
             {friends.map((friend, index) => (
                 <div key={index} className="flex flex-row gap-5 p-4 items-center space-between bg-dark-2 rounded-lg shadow-md mb-4">
                     <Avatar className='w-12 h-12 ml-3 object-cover'>
@@ -55,18 +59,18 @@ async function Page() {
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <p className='small-regular text-secondary-500'>{friend.name}</p>
-                    <hr/>
+                    <hr />
                     <div className='flex flex-row gap-2'>
-                    {friend.interests.map((interest, i) => (
-                        <span key={i}>
-                        <Badge
-                            className="font-semibold bg-dark-3 text-light-4"
-                            variant="default"
-                        >
-                            {interest}
-                        </Badge>
-                    </span>
-                    ))}
+                        {friend.interests.map((interest, i) => (
+                            <span key={i}>
+                                <Badge
+                                    className="font-semibold bg-dark-3 text-light-4"
+                                    variant="default"
+                                >
+                                    {interest}
+                                </Badge>
+                            </span>
+                        ))}
                     </div>
                 </div>
             ))}
@@ -76,7 +80,7 @@ async function Page() {
                 {achievements.map((achievement) => (
                     <div className="w-30 h-30 bg-dark-2 rounded-lg">
                         <div className="flex flex-col items-center justify-center gap-4 p-5">
-                            <Image src={achievement.src} alt={achievement.name} width={40} height={40}/>
+                            <Image src={achievement.src} alt={achievement.name} width={40} height={40} />
                             <p className="text-base-semibold text-primary-500 word-break">{achievement.name}</p>
                         </div>
                     </div>
