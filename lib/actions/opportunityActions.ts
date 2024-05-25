@@ -40,18 +40,14 @@ export async function addNewOpportunity(
     }
 };
 
-// export async function addNewOpportunity(oppData: typeof Opportunity) {
-//     try {
-//         await connectToDB();
-
-//         // Generate a unique ObjectId for the opportunity
-//         console.log(oppData)
-//         oppData._id = new mongoose.Types.ObjectId();
-
-//         const newOpportunity = new Opportunity(oppData);
-//         const savedOpportunity = await newOpportunity.save();
-//         return savedOpportunity ? savedOpportunity.toObject() : null;
-//     } catch (err: any) {
-//         throw new Error(`Failed to add new opportunity: ${err.message}`);
-//     }
-// }
+export async function deleteOpportunity(
+    id: String
+) {
+    try {
+        await connectToDB();
+        await Opportunity.deleteOne({ _id: id });
+        return { message: 'Successfully deleted Opportunity' };
+    } catch (err: any) {
+        throw new Error(`Failed to delete Opportunity: ${err.message}`);
+    }
+};

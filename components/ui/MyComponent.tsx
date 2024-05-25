@@ -1,10 +1,9 @@
 "use client"
 
-import { fetchAllUsers, getUser, getUserByEmail, addNewUser } from '@/lib/actions/userActions';
-import { fetchAllOpportunities, getOpportunity, addNewOpportunity } from '@/lib/actions/opportunityActions';
+import { fetchAllUsers, getUser, getUserByEmail, addNewUser, deleteUser } from '@/lib/actions/userActions';
+import { fetchAllOpportunities, getOpportunity, addNewOpportunity, deleteOpportunity } from '@/lib/actions/opportunityActions';
 import User from '@/lib/models/userModel';
 import Opportunity from '@/lib/models/opportunityModel';
-// import { Opportunity } from '@/lib/models/opportunityModel';
 
 function MyComponent() {
 
@@ -25,6 +24,16 @@ function MyComponent() {
             console.log(err.message);
         }
     };
+
+    const handleDeleteUser = async (userId: string) => {
+        try {
+            const fetchedUser = await deleteUser(userId);
+            console.log("deleted", fetchedUser);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+    
 
     const handleGetUserByEmail = async (email: string) => {
         try {
@@ -52,11 +61,11 @@ function MyComponent() {
     };
 
     const newOpportunity: typeof Opportunity = {
-        name: "drinking",
+        name: "crying",
         imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
-        description: "drinking desc",
+        description: "crying desc",
         availableSlots: 100,
-        venue: "drinking place",
+        venue: "crying place",
         date: "2010-11-15",
         xp: 200,
     };
@@ -97,17 +106,28 @@ function MyComponent() {
         }
     };
 
+    const handleDeleteOpportunity = async (id: string) => {
+        try {
+            const fetchedOpportunity = await deleteOpportunity(id);
+            console.log("deleted", fetchedOpportunity);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     return (
         <div>
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('66519ca5d021f3503872d071')}>Get User by ID</button> <br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651e0ba94ee984b3c2436e4')}>Get User by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity('6651ee9991b2c0fb293c7d34')}>Delete Opportunity</button><br />
         </div>
     );
 }
