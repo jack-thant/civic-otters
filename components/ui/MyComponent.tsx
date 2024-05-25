@@ -1,7 +1,20 @@
 "use client"
 
-import { fetchAllUsers, getUser, getUserByEmail, addNewUser, deleteUser } from '@/lib/actions/userActions';
-import { fetchAllOpportunities, getOpportunity, addNewOpportunity, deleteOpportunity } from '@/lib/actions/opportunityActions';
+import { 
+    fetchAllUsers, 
+    getUser, 
+    getUserByEmail, 
+    addNewUser, 
+    deleteUser,
+    getUserFriends,
+    checkName
+} from '@/lib/actions/userActions';
+import { 
+    fetchAllOpportunities, 
+    getOpportunity, 
+    addNewOpportunity, 
+    deleteOpportunity 
+} from '@/lib/actions/opportunityActions';
 import User from '@/lib/models/userModel';
 import Opportunity from '@/lib/models/opportunityModel';
 
@@ -44,29 +57,50 @@ function MyComponent() {
         }
     };
 
+    const handleGetUserFriends = async (userId: string) => {
+        try {
+            const friends = await getUserFriends(userId);
+            console.log(friends);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
+    const handleCheckName = async (name: string) => {
+        try {
+            const user = await checkName(name);
+            console.log(user !== null);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        email: "expert@example.com",
-        userImage: "https://example.com/expert.jpg",
+        email: "aaa@example.com",
+        userImage: "https://example.com/aaa.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "expert expert",
+        name: "aaa aaa",
         DOB: "2010-11-15",
         userType: 400,
         xp: 0,
-        friends: [],
+        friends: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
         achievements: [],
         interests: ["Gardening", "DIY", "Sculpture"],
-        requested: [],
-        pending: []
+        requested: ["6651e54ef3cb242171a6a9e0"],
+        pending: ["6651e54ef3cb242171a6a9e0"]
     };
 
     const newOpportunity: typeof Opportunity = {
-        name: "crying",
+        name: "ggg",
         imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
-        description: "crying desc",
+        description: "ggg desc",
         availableSlots: 100,
-        venue: "crying place",
+        venue: "ggg place",
         date: "2010-11-15",
+        tags: ["Gardening", "DIY", "Sculpture"],
+        participants: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
+        organizerContact: ["6651e54ef3cb242171a6a9e0"],
         xp: 200,
     };
 
@@ -122,6 +156,8 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651f58c191db42519621fa8')}>Get User Friends</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
             <br />
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />

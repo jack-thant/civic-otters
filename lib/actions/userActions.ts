@@ -13,7 +13,6 @@ export async function fetchAllUsers() {
     }
 }
 
-
 export async function addNewUser(
     userData: typeof User
 ) {
@@ -64,3 +63,38 @@ export async function getUserByEmail(
         throw new Error(`Failed to fetch user by email: ${err.message}`);
     }
 };
+
+export async function getUserFriends(userId: string) {
+    try {
+        await connectToDB();
+        
+        // Find the user by ID
+        const user = await User.findById(userId);
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        // Extract friend IDs from the user's friends array
+        const friendIds = user.friends;
+
+        // Find users with friend IDs
+        const friends = await User.find({ _id: { $in: friendIds } });
+
+        // Return friends as plain objects
+        return friends.map(friend => friend.toObject());
+    } catch (err: any) {
+        throw new Error(`Failed to fetch user friends: ${err.message}`);
+    }
+}
+
+export async function checkName(name: string) {
+    try {
+        await connectToDB();
+        
+        // Find the user by name
+        const user = await User.findOne({ name });
+        return user ? user.toObject() : null;
+    } catch (err: any) {
+        throw new Error(`Failed to check user name: ${err.message}`);
+    }
+}
