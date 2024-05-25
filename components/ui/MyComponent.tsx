@@ -36,7 +36,7 @@ export default function MyComponent() {
     };
 
     const newUser: typeof User = {
-        email: "expert@example.com",
+        email: "user1@example.com",
         userImage: "https://example.com/expert.jpg",
         password: "passwordABC",
         isNewUser: true,

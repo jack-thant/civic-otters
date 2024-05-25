@@ -1,10 +1,10 @@
-'use client'
 // import React, { useState, useEffect } from "react";
 import Search from '@/components/search';
 import Table from '@/app/(root)/search/table';
 import { Suspense } from "react";
+import { fetchAllUsers, getUser } from '@/lib/actions/user.actions';
 
-export default function Page({
+export default async function Page({
     searchParams,
 }: {
   searchParams?: {
@@ -12,6 +12,7 @@ export default function Page({
   };
 }) {
 
+    const users = await fetchAllUsers();
     const query = searchParams?.query || '';
 
     return (
@@ -20,7 +21,7 @@ export default function Page({
                 <Search placeholder="Search your otters"/>
             </div>
             <Suspense key={query}>
-                <Table query={query}/>
+                <Table query={query} users={users}/>
             </Suspense>
         </div>
     )
