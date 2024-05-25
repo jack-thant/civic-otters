@@ -2,7 +2,7 @@
 
 import { fetchAllUsers, getUser, getUserByEmail, addNewUser } from '@/lib/actions/userActions';
 import { useState } from 'react';
-import type { User } from '../../lib/models/userModel';
+import User from '@/lib/models/userModel';
 
 function MyComponent() {
 
@@ -34,11 +34,11 @@ function MyComponent() {
     };
 
     const newUser: typeof User = {
-        email: "apple@example.com",
-        userImage: "https://example.com/apple.jpg",
+        email: "pear@example.com",
+        userImage: "https://example.com/pear.jpg",
         password: "passwordABC",
         isNewUser: true,
-        name: "apple apple",
+        name: "pear pear",
         DOB: "1975-11-15",
         userType: 0,
         friends: [],
