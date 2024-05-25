@@ -1,8 +1,8 @@
 # Civic Otters
 
-Description here.
+Civic Otters is a webapp that allows young adults and friends to easily sign up for volunteering events and opportunities with their friends. The simple and easy-to-use interface allows users to find events that they are interested in easily. They can also see what their friends have signed up for and participate together. After the event, users are rewarded with XP according to their service hours and stand a chance to be on the leaderboard!
 
-![image](https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png)
+![image](https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/screenshot.jpg)
 
 ## Features
 
@@ -10,6 +10,7 @@ Description here.
 - Add & Accept other Otter Pals
 - Sign up for Events & Opportunities
 - View Friends' Activities
+- Volunteering XP Leaderboard
 
 ## Technologies
 [![My Skills](https://skillicons.dev/icons?i=next,react,tailwind,mongodb,vercel,ts&theme=dark)](https://skillicons.dev)
