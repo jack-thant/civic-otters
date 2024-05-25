@@ -20,6 +20,12 @@ export async function addNewUser(
 ) {
     try {
         await connectToDB();
+        // userData.isNewUser = true;
+        // userData.DOB = "2001-11-15";
+        // userData.userType = 0;
+        // userData.interests = ["Community", "Health"];
+
+        // console.log()
 
         const newUser = new User(userData);
         const savedUser = await newUser.save();
@@ -28,6 +34,45 @@ export async function addNewUser(
         throw new Error(`Failed to add new user: ${err.message}`);
     }
 };
+
+export async function editUser(
+    userId: string,
+    new_id: string,
+    new_name: string, 
+    new_email: string,
+    new_image: string
+) {
+    try {
+        await connectToDB();
+        
+        // Find and update the user
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {
+                clerk_id: new_id,
+                name: new_name,
+                email: new_email,
+                userImage: new_image,
+            },
+            { new: true, useFindAndModify: false }
+        );
+
+        if (!updatedUser) {
+            throw new Error('User not found');
+        }
+
+        return updatedUser.toObject();
+    } catch (err: any) {
+        throw new Error(`Failed to edit user: ${err.message}`);
+    }
+}
+
+/*
+    name: values.name,
+    userId: user.id,
+    email: user.email
+    image: values.profile_photo,
+*/
 
 export async function getUser(userId: string) {
     try {

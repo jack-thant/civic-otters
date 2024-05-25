@@ -8,6 +8,10 @@ export const userSchema = new Schema({
         required: true,
         unique: true
     },
+    clerk_id: {
+        type: String,
+        unique: true
+    },
     email: {
         type: String,
         required: true,

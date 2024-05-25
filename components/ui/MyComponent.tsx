@@ -13,7 +13,8 @@ import {
     acceptFriendRequest,
     getUserOpportunities,
     getFriendEvents,
-    registerForEvent
+    registerForEvent,
+    editUser
 } from '@/lib/actions/user.actions';
 import { 
     fetchAllOpportunities, 
@@ -140,22 +141,38 @@ function MyComponent() {
         }
     };
 
+    const handleEditUser = async (
+        userId: string,
+        new_id: string,
+        new_name: string, 
+        new_email: string,
+        new_image: string
+    ) => {
+        try {
+            const res = await editUser(userId, new_id, new_name, new_email, new_image);
+            console.log(res);
+        } catch (err: any) {
+            console.log(err.message);
+        }
+    };
+
     const newUser: typeof User = {
-        _id: "6651f520191db42519621f1e",
-        email: "testing5@gmail.com",
+        _id: "6651f520191db425196212f6",
+        email: "germany@gmail.com",
         userImage: "https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/otter.jpg",
-        password: "password",
-        isNewUser: true,
-        name: "testing5",
-        DOB: "2001-11-15",
-        userType: 0,
+        password: "password", 
+        isNewUser: true, // can update
+        name: "germany",
+        DOB: "2001-11-15", // hardcode
+        userType: 0, // hardcode
         xp: 0,
         friends: [],
-        achievements: [],
-        interests: ["Gardening", "DIY", "Sculpture"],
+        achievements: [], 
+        interests: ["Gardening", "DIY", "Sculpture"], // take two
         requested: [],
         pending: [],
         events: [],
+        clerk_id: "123123123123"
     };
 
     const newOpportunity: typeof Opportunity = {
@@ -223,6 +240,7 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('testing@gmail.com')}>Get User By Email</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651f520191db42519621f9e')}>Delete User</button><br />
+            <button style={{border: "1px black solid"}} onClick={() => handleEditUser('6651f520191db425196212f6', '789789789789', "NewNameHere","newemail@gmail.com","https://raw.githubusercontent.com/Zaiqin/hacksingaporeassets/main/pngtree-golden-award-badge-vector-png-image_8754258.png")}>Edit User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('testing')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByName('testing')}>Get User by Name</button><br />
