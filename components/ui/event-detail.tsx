@@ -18,11 +18,18 @@ export interface EventDetailFormProps {
 }
 
 // Function to format date components
-const formatDate = (date: Date | undefined) => {
+const formatDate = (date: Date | undefined): string => {
   if (!date) return "";
-  const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
   return new Intl.DateTimeFormat('en-US', options).format(date);
 };
+
 
 // Event detail component
 export default function EventDetailPage({ event }: EventDetailFormProps) {
