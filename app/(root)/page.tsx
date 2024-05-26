@@ -1,17 +1,48 @@
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Badge } from "@/components/ui/badge";
-import {
-  getFriendEvents,
-  getUserOpportunities,
-} from "@/lib/actions/user.actions";
+import { getFriendEvents, getUserOpportunities } from "@/lib/actions/user.actions";
 import Link from "next/link";
 import Image from "next/image";
+import { ReactElement, JSXElementConstructor, Key } from "react";
+
+interface Event {
+  name: string;
+  imageUrl: string;
+  date: string;
+  tags: string[];
+  venue: string;
+  _id: string;
+}
+
+interface FriendEvent {
+  friendName: string;
+  events: Event[];
+}
+
+interface UserActivity {
+  name: string;
+  imageUrl: string;
+  date: string;
+  tags: string[];
+  venue: string;
+  _id: string;
+}
+
+interface NormalizedActivity {
+  name: string;
+  activity: string;
+  imageUrl: string;
+  time: Date;
+  tags: string[];
+  venue: string;
+  id: string;
+}
 
 export default async function ActivityPage() {
-  const friendActivity = await getFriendEvents("alice");
-  const userActivity = await getUserOpportunities("alice");
+  const friendActivity: FriendEvent[] = await getFriendEvents("alice");
+  const userActivity: UserActivity[] = await getUserOpportunities("alice");
 
-  const normalizeActivityData = (friendActivities, userActivities) => {
+  const normalizeActivityData = (friendActivities: FriendEvent[], userActivities: UserActivity[]): NormalizedActivity[] => {
     const normalizedFriendActivities = friendActivities.flatMap((friend) =>
       friend.events.map((event) => ({
         name: friend.friendName,
@@ -37,7 +68,7 @@ export default async function ActivityPage() {
     return [...normalizedFriendActivities, ...normalizedUserActivities];
   };
 
-  const formatDate = (date) => {
+  const formatDate = (date: Date): string => {
     if (!date) return "";
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -48,16 +79,16 @@ export default async function ActivityPage() {
   };
 
   const allActivities = normalizeActivityData(friendActivity, userActivity);
-  allActivities.sort((a, b) => new Date(b.time) - new Date(a.time));
+  allActivities.sort((a, b) => b.time.getTime() - a.time.getTime());
 
   return (
     <main className="max-w-4xl mx-auto mt-4">
       <h1 className="head-text mb-5">Activity</h1>
       <div className="space-y-4">
-        {allActivities.map((activity, index) => (
+        {allActivities.map((activity) => (
           <Link key={activity.id} href={`/events/${activity.id}`} passHref>
             <div className="block py-2">
-              <div key={index} className="bg-dark-2 rounded-lg shadow">
+              <div className="bg-dark-2 rounded-lg shadow">
                 <h2 className="text-2xl text-secondary-500 font-semibold p-4">
                   {activity.name}
                 </h2>
@@ -74,12 +105,9 @@ export default async function ActivityPage() {
 
                 {activity.tags && activity.tags.length > 0 && (
                   <div className="flex flex-wrap p-4">
-                    {activity.tags.slice(0, 3).map((tag, index) => (
+                    {activity.tags.slice(0, 3).map((tag: string, index: Key) => (
                       <span key={index}>
-                        <Badge
-                          className="font-semibold bg-dark-3 text-light-4 px-3 py-2"
-                          variant="default"
-                        >
+                        <Badge className="font-semibold bg-dark-3 text-light-4 px-3 py-2" variant="default">
                           {tag}
                         </Badge>
                       </span>
