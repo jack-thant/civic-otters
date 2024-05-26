@@ -130,7 +130,7 @@ interface Props {
         role: Role;
         dateOfBirth: Date;
         image: string;
-        interests: [string, ...string[]];
+        interests: Array<string>;
     };
     btnTitle: string;
 }
