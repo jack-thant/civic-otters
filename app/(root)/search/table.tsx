@@ -86,7 +86,7 @@ export default async function FriendTable({
                   {user.email}
                 </td>
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                  <Tag className='text-dark-1' values={user.interests} />
+                  <Tag values={user.interests} />
                 </td>
                 <td className="whitespace-nowrap py-3 pl-6 pr-3">
                   {currUser.friends.includes(user._id) ? (
