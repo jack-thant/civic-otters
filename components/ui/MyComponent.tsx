@@ -130,36 +130,36 @@ function MyComponent() {
         }
     };
 
-    const newUser: typeof User = {
-        _id: "6651f520191db42519621f9b",
-        email: "testing@gmail.com",
-        userImage: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
-        password: "password",
-        isNewUser: true,
-        name: "testing",
-        DOB: "2011-11-15",
-        userType: 400,
-        xp: 0,
-        friends: [],
-        achievements: [],
-        interests: ["Gardening", "DIY", "Sculpture"],
-        requested: [],
-        pending: [],
-        events: ["6651f520191db42519621f9b"],
-    };
+    // const newUser: typeof User = {
+    //     _id: "6651f520191db42519621f9b",
+    //     email: "testing@gmail.com",
+    //     userImage: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
+    //     password: "password",
+    //     isNewUser: true,
+    //     name: "testing",
+    //     DOB: "2011-11-15",
+    //     userType: 400,
+    //     xp: 0,
+    //     friends: [],
+    //     achievements: [],
+    //     interests: ["Gardening", "DIY", "Sculpture"],
+    //     requested: [],
+    //     pending: [],
+    //     events: ["6651f520191db42519621f9b", "123412413413"],
+    // };
 
-    const newOpportunity: typeof Opportunity = {
-        name: "ggg",
-        imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
-        description: "ggg desc",
-        availableSlots: 100,
-        venue: "ggg place",
-        date: "2010-11-15",
-        tags: ["Gardening", "DIY", "Sculpture"],
-        participants: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
-        organizerContact: ["6651e54ef3cb242171a6a9e0"],
-        xp: 200,
-    };
+    // const newOpportunity: typeof Opportunity = {
+    //     name: "ggg",
+    //     imageUrl: "https://raw.githubusercontent.com/Zaiqin/NoExpiry/main/client/src/assets/screenshot.png",
+    //     description: "ggg desc",
+    //     availableSlots: 100,
+    //     venue: "ggg place",
+    //     date: "2010-11-15",
+    //     tags: ["Gardening", "DIY", "Sculpture"],
+    //     participants: ["6651e3a081f554ce4a802128", "6651e4eaf3cb242171a6a9de"],
+    //     organizerContact: ["6651e54ef3cb242171a6a9e0"],
+    //     xp: 200,
+    // };
 
     const handleAddNewUser = async (user: typeof User) => {
         try {
@@ -211,7 +211,7 @@ function MyComponent() {
             <button style={{border: "1px black solid"}} onClick={handleFetchUsers}>Fetch All Users</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUser('6651f520191db42519621f9b')}>Get User by ID</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserByEmail('john@example.com')}>Get User By Email</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br />
+            {/* <button style={{border: "1px black solid"}} onClick={() => handleAddNewUser(newUser)}>Add User</button><br /> */}
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteUser('6651e0ba94ee984b3c2436e4')}>Delete User</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetUserFriends('6651e3a081f554ce4a802128')}>Get User Friends</button><br />
             <button style={{border: "1px black solid"}} onClick={() => handleCheckName('grape grape')}>Check For Name</button><br />
@@ -225,7 +225,7 @@ function MyComponent() {
 
             <button style={{border: "1px black solid"}} onClick={handleFetchOpportunities}>Fetch All Opportunities</button> <br />
             <button style={{border: "1px black solid"}} onClick={() => handleGetOpportunity('6651df8aeaa03fa12bdc01e0')}>Get Opportunity by ID</button> <br />
-            <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br />
+            {/* <button style={{border: "1px black solid"}} onClick={() => handleAddNewOpportunity(newOpportunity)}>Add New Opportunity</button><br /> */}
             <button style={{border: "1px black solid"}} onClick={() => handleDeleteOpportunity('6651ee9991b2c0fb293c7d34')}>Delete Opportunity</button><br />
         </div>
     );
