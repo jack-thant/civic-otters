@@ -8,10 +8,7 @@ import Image from "next/image";
 import { revalidatePath } from "next/cache";
 
 import User from "@/lib/models/user.model";
-
-export const Revalidate = (str) => {
-  revalidatePath("/search", "page");
-};
+import { getAllUsersByName } from "@/lib/actions/user.actions";
 
 export default async function FriendTable({
   query,
@@ -23,8 +20,9 @@ export default async function FriendTable({
   currUser: typeof User;
 }) {
   console.log(users);
-  if (query !== "") {
-  }
+  // if (query !== "") {
+  //   const users = await getAllUsersByName(query);
+  // }
 
   const handleAddFriend = () => {
     console.log("addFriend");

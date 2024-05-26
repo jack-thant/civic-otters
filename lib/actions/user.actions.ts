@@ -168,6 +168,18 @@ export async function getUserByName(name: string) {
   }
 }
 
+export async function getAllUsersByName(name: string) {
+  try {
+    await connectToDB();
+
+    // Find the user by name
+    const users = await User.find({ name });
+    return users.map((user) => user.toObject()); // Convert Mongoose documents to plain objects
+  } catch (err: any) {
+    throw new Error(`Failed to check user name: ${err.message}`);
+  }
+}
+
 export async function addFriend(requesterName: string, receiverName: string) {
   try {
     await connectToDB();
