@@ -70,7 +70,13 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-This project is also deployed on Vercel [here]()
+This project is also deployed on Vercel [here](https://civic-otters.vercel.app/sign-in)
+
+## Video Demonstration 
+
+Click [here](https://youtu.be/pRxCuEz8bP0) to watch the video demonstration of our website on Youtube.
+
+
 
 ## Team Members
 
