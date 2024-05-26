@@ -77,8 +77,8 @@ async function Page() {
             {/* Achievements List */}
             <h4 className='heading4-medium text-light-1 pt-5 pb-2'>Achievements</h4>
             <div className="flex flex-row gap-3">
-                {achievements.map((achievement) => (
-                    <div className="w-30 h-30 bg-dark-2 rounded-lg">
+                {achievements.map((achievement, index) => (
+                    <div key={index} className="w-30 h-30 bg-dark-2 rounded-lg">
                         <div className="flex flex-col items-center justify-center gap-4 p-5">
                             <Image src={achievement.src} alt={achievement.name} width={40} height={40} />
                             <p className="text-base-semibold text-primary-500 word-break">{achievement.name}</p>
