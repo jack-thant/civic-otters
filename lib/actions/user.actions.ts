@@ -286,4 +286,58 @@ export async function acceptFriendRequest(requesterName: string, receiverName: s
     }
   }
 
+    
+export async function rejectFriendRequest(requesterName: string, receiverName: string) { 
+    try {
+      await connectToDB();
   
+      const [requesterUser, receiverUser] = await Promise.all([
+        getUserByName(requesterName),
+        getUserByName(receiverName),
+      ]);
+  
+      if (!requesterUser || !receiverUser) {
+        throw new Error('User(s) not found');
+      }
+  
+      const requesterUserId = requesterUser._id; 
+      const receiverUserId = receiverUser._id; 
+  
+      console.log('Requester User ID:', requesterUserId);
+      console.log('Receiver User ID:', receiverUserId);
+  
+      // Start a session and transaction for atomicity
+      const session = await User.startSession();
+      session.startTransaction();
+  
+      try {
+
+          // Remove requester's user ID from receiver's pending array
+          await User.findByIdAndUpdate(
+            requesterUserId,
+              { $pull: { requested: receiverUserId._id } },
+              { new: true, useFindAndModify: false, session }
+          );
+
+          // Remove receiver's user ID from requester's requested array
+          await User.findByIdAndUpdate(
+            receiverUserId,
+              { $pull: { pending: requesterUser._id } },
+              { new: true, useFindAndModify: false, session }
+          );
+
+          // Commit the transaction
+          await session.commitTransaction();
+          session.endSession();
+
+        return { message: 'Friend request accepted successfully' };
+      } catch (err) {
+        // Abort the transaction if any error occurs
+        await session.abortTransaction();
+        session.endSession();
+        throw err;
+      }
+    } catch (err: any) {
+      throw new Error(`Failed to accept friend request: ${err.message}`);
+    }
+  }

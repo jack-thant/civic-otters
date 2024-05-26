@@ -47,6 +47,7 @@ const Container = ({
       )}
       <div className="p-4">
         <h1 className="text-lg font-semibold text-green-800 mb-2">{name}</h1>
+        
         <p className="text-sm text-gray-600 mb-2">
           <span className="font-semibold">Date:</span> {formatDate(date)}
         </p>
