@@ -5,10 +5,11 @@ import {
   getUserOpportunities,
 } from "@/lib/actions/user.actions";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function ActivityPage() {
-  const friendActivity = await getFriendEvents("testing");
-  const userActivity = await getUserOpportunities("testing");
+  const friendActivity = await getFriendEvents("alice");
+  const userActivity = await getUserOpportunities("alice");
 
   const normalizeActivityData = (friendActivities, userActivities) => {
     const normalizedFriendActivities = friendActivities.flatMap((friend) =>
@@ -55,7 +56,7 @@ export default async function ActivityPage() {
       <div className="space-y-4">
         {allActivities.map((activity, index) => (
           <Link key={activity.id} href={`/events/${activity.id}`} passHref>
-            <div className="block p-4">
+            <div className="block py-2">
               <div key={index} className="bg-dark-2 rounded-lg shadow">
                 <h2 className="text-2xl text-secondary-500 font-semibold p-4">
                   {activity.name}
@@ -74,10 +75,10 @@ export default async function ActivityPage() {
                 {activity.tags && activity.tags.length > 0 && (
                   <div className="flex flex-wrap p-4">
                     {activity.tags.slice(0, 3).map((tag, index) => (
-                      <span key={index} className="mr-2 mb-2">
+                      <span key={index}>
                         <Badge
-                          className="font-semibold text-light-2 shadow-md border"
-                          variant="outline"
+                          className="font-semibold bg-dark-3 text-light-4 px-3 py-2"
+                          variant="default"
                         >
                           {tag}
                         </Badge>
@@ -85,10 +86,20 @@ export default async function ActivityPage() {
                     ))}
                   </div>
                 )}
-                <p className="text-light-2 p-4">
-                  Time: {formatDate(activity.time)}
-                </p>
-                <p className="text-light-2 p-4">Venue: {activity.venue}</p>
+                <div className="flex flex-row space-between gap-x-10 p-4">
+                  <div className="flex flex-row items-center gap-x-2">
+                    <Image src='../assets/clock.svg' alt='clock' width={18} height={18} />
+                    <p className="text-sm font-medium text-light-1">{formatDate(activity.time)}</p>
+                  </div>
+
+                  {activity.venue && (
+                    <div className="flex flex-row items-center gap-x-2">
+                      <Image src='../assets/map-pin.svg' alt='clock' width={18} height={18} />
+                      <p className="text-sm font-medium text-light-1">{activity.venue}</p>
+                    </div>
+                  )}
+                </div>
+
               </div>
             </div>
           </Link>
