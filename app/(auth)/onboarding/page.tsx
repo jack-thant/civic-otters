@@ -7,7 +7,7 @@ async function Page()
     const user = await currentUser();
 
     const userInfo = {
-        _id: "1",
+        id: "1",
         username: "jack-thant",
         name: "Thant Htoo",
         role: Role.Volunteer,
@@ -18,7 +18,7 @@ async function Page()
 
     const userData = {
         id: user?.id || "3",
-        objectId: userInfo?._id || "", // Ensure objectId is assigned a string value
+        objectId: userInfo?.id || "", // Ensure objectId is assigned a string value
         username: userInfo?.username || user?.username || "",
         name: userInfo?.name || user?.firstName || "",
         role: userInfo?.role,
